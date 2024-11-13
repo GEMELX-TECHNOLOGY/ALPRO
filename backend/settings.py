@@ -151,10 +151,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/Media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if not DEBUG:  
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type

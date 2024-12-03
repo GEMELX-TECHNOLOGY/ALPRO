@@ -6,6 +6,7 @@ from django.urls import include,path
 
 urlpatterns = [
     #URLs Usuarios
+   #URLs Usuarios
     path("api/v1/user/", user_details, name='usuarios'),
     path("api/v1/users/", AllUsersView.as_view(), name='users'),
     path("api/v1/user/<int:id>/", DetalleUsuarioView.as_view(), name='user-profile'),
@@ -13,6 +14,19 @@ urlpatterns = [
     path("api/v1/user/edit/<int:id>/", UserUpdateView.as_view(), name='editar-usuario'),
     path("api/v1/user/delete/<int:pk>/", UsuarioDeleteView.as_view(), name='delete-user'),
     
+    #URLs Empleados
+    path("api/v1/empleados/", GetEmpleados.as_view()),
+    path("api/v1/empleados/registrar/", CreateEmpleados.as_view()),
+    path("api/v1/empleado/<int:pk>/", EmpleadoDetail.as_view()),
+    path("api/v1/empleados/editar/<int:id>/", UpdateEmpleado.as_view()),
+    path("api/v1/empleados/eliminar/<int:pk>/", DeleteEmpleado.as_view()),
+
+    #URLs Chat
+    path('api/v1/my-messages/<user_id>/', MyInbox.as_view(), name='mis mensajes'),
+    path('api/v1/get-messages/<sender_id>/<reciever_id>/', GetMessages.as_view()),
+    path('api/v1/send-messages/', SendMessage.as_view()),
+    path("api/v1/search/<username>/", SearchUser.as_view()),
+
     #URLs Roles
     path("api/v1/roles/", AllRolView.as_view(), name='roles'),
     path("api/v1/rol/registrar", CreateRoleView.as_view(), name="crear-rol"),
@@ -34,6 +48,7 @@ urlpatterns = [
     #URLs categorias
     path('api/v1/categorias/', ListaCategoriasView.as_view(), name='lista_categorias_api'),
     path('api/v1/categorias/crear/', CreateCategoriesView.as_view(), name='crear-categorias'),
+    path('api/v1/categorias/eliminar/', DeleteCategoriaView.as_view(), name='eliminar-categorias'),
     path('api/v1/categorias/<int:id_categoria>/', DetalleCategoriaView.as_view(), name='detalle_categoria_api'),
 
    
@@ -55,31 +70,41 @@ urlpatterns = [
     #URLs Ventas
     path('api/v1/ventas/', ListaVentasView.as_view(), name='lista_ventas_api'),
     path('api/v1/ventas/crear/', CreateVentaView.as_view(), name='crear_venta'),
-    path('api/v1/ventas/actualizar/<int:id>/', UpdateVentaView.as_view(), name='actualizar_ventas'),
-    path('api/v1/ventas/<int:id>/', DetalleVentaView.as_view(), name='detalle_venta_api'),
+    path('api/v1/ventas/actualizar/<int:pk>/', UpdateVentaView.as_view(), name='actualizar_ventas'),
+    path('api/v1/ventas/eliminar/', DeleteVentaView.as_view(), name='eliminar_venta'),
+    path('api/v1/ventas/<int:pk>/', DetalleVentaView.as_view(), name='detalle_venta_api'),
 
-    #urls DetalleVentas
-    path('api/v1/detalle_ventas/', ListaDetalleVentasView.as_view(), name='lista_detalle_ventas_api'),
+
     
 
-    #urls Cotizaciones
+         # Listar todas las cotizaciones
     path('api/v1/cotizaciones/', ListaCotizacionesView.as_view(), name='lista_cotizaciones_api'),
+    
+    # Crear una nueva cotización
     path('api/v1/cotizaciones/crear/', CreateCotizacionView.as_view(), name='crear_cotizacion'),
-    path('api/v1/cotizaciones/<int:id_cotizacion>/', DetalleCotizacionView.as_view(), name='detalle_cotizacion_api'),
+    
+    # Actualizar una cotización existente
+    path('api/v1/cotizaciones/actualizar/<int:pk>/', UpdateCotizacionView.as_view(), name='actualizar_cotizacion'),
+    
+    # Eliminar una cotización
+    path('api/v1/cotizaciones/eliminar/', DeleteCotizacionView.as_view(), name='eliminar_cotizacion'),
+    
+    # Ver los detalles de una cotización
+    path('api/v1/cotizaciones/<int:pk>/', DetalleCotizacionView.as_view(), name='detalle_cotizacion_api'),
 
-    #urls DetalleCotizaciones
-    path('api/v1/detalle_cotizaciones/', ListaDetalleCotizacionesView.as_view(), name='lista_detalle_cotizaciones_api'),
-   
 
-    #urls Devoluciones
-    path('api/v1/devoluciones/', ListaDevolucionesView.as_view(), name='lista_devoluciones_api'),
-    path('api/v1/devoluciones/crear/', CreateDevolucionView.as_view(), name='crear_devolucion'),
 
     #urls Nomina
     path('api/v1/nominas/', ListaNominasView.as_view(), name='lista_nominas_api'),
     path('api/v1/nominas/crear/', CreateNominaView.as_view(), name='crear_nomina'),
+    path('api/v1/nominas/editar/<int:pk>/', EditNominaView.as_view(), name='editar_nomina'),
+    path('api/v1/nominas/eliminar/<int:pk>/', DeleteNominaView.as_view(), name='eliminar_nomina'),
 
     #urls Horario
     path('api/v1/horarios/', ListaHorariosView.as_view(), name='lista_horarios_api'),
     path('api/v1/horarios/crear/', CreateHorarioView.as_view(), name='crear_horario'),
+    path('api/v1/horarios/editar/<int:pk>/', EditHorarioView.as_view(), name='editar_horario'),
+    path('api/v1/horarios/eliminar/<int:pk>/', DeleteHorarioView.as_view(), name='eliminar_horario'),
+
+    path('api/v1/sales-report-pdf/', SalesReportPDFAPIView.as_view(), name='sales-report-pdf'),
 ]
